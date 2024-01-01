@@ -1,0 +1,145 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+#Installation 
+pip install pandas
+import pandas as pd
+import numpy as np
+
+# Replace 'your_file.csv' with the actual name of your CSV file
+file_name = 'trip-mad.csv'
+
+# Read CSV file into a DataFrame
+mydata = pd.read_csv(file_name)
+
+# Replace 'path/to/new/directory' with the desired path
+new_directory = 'Users/phillis/Desktop/trip-mad.csv'
+
+# Change the working directory
+os.chdir(new_directory)
+
+#Data Depiction
+print(mydata)
+print(mydata.head())
+print(mydata.info())
+print(mydata.describe())
+
+#Vegetarian
+vegetarian = (mydata['diets'] == 'Vegetarian Friendly')
+
+#Fill null values
+mydata.isna()
+mydata.fillna(value)
+mydata.fillna('diets' = None)
+mydata.fillna('diets' == None)
+mydata.isna().sum()
+mydata.isna().mean()
+
+#Vectorize Vegetarian
+def vegetarian(str):
+    return int('Vegetarian' in str)
+vegetarian('Vegan Option')
+vegetarian('Vegetarian Option')
+vegetarian = np.vectorize(vegetarian)
+vegetarian(mydata['diets'])
+mydata['diets'] = mydata.fillna('None')
+mydata['diets'] = mydata['diets'].fillna('None')
+vegetarian(mydata['diets'])
+mydata['vegetarian'] = vegetarian(mydata['diets'])
+    
+# Pivot table and crosstabs
+    pd.pivot.table(mydata, values = 'priceRange', index= 'meals',aggfunc='median').round()
+    pd.crosstab(mydata['neigh'], mydata['priceRange'])
+    
+# Filter based on neighbourhood
+    mydata['neigh'(filter['vegetarian'])].value_counts().head(10)
+    filtered_Salamanca = mydata[mydata['neigh'] == 'Salamanca']
+    print(filtered_Salamanca)
+    
+#Focus on Healthy Cuisine
+    mydata['cuisines'] = mydata['cuisines'].fillna('None')
+mydata['diets'] = mydata['diets'].fillna('None')
+def healthy(str):
+    return int('Healthy' in str)
+healthy = np.vectorize(healthy)
+
+Healthy('Healthy')
+Out[59]: 0
+
+Healthy('Spanish')
+Out[60]: 1
+
+#Chart vizualization Correlation Review Count & Rank / Photos in Vegetarian Restaurants in Salamanca
+condition_healthvector = filtered_Salamanca['Cuisines'] > 0
+filtered_health = filtered_Salamanca[condition_healthvector]
+print("Filtered Healthy Options in Salamanca:")
+print(filtered_health)
+
+Filtered_Cuisine = filtered_health[filtered_health['Cuisines'] > 0]
+print(Filtered_Cuisine)
+
+Healthy(filtered_Salamanca['cuisines'])
+Healthy_in_Salamanca = Healthy(filtered_Salamanca['cuisines'])
+Condition_Healthy = np.array(Healthy_in_Salamanca['Cuisines'] > 0)
+Filtered_Cuisine['photos'].corr(Filtered_Cuisine['rank']).round(2)
+Filtered_Cuisine.plot.scatter(x='photos', y='rank', 
+    title='Figure 1. Correlation Number of Photos & Rank in Vegetarian Restaurants in Salamanca', figsize=(5,5), color='gray',
+    xlabel='Number of Photos', ylabel='Rank');
+Filtered_Cuisine['reviewCount'].corr(Filtered_Ciusine['rank']).round(2)
+Filtered_Cuisine.plot.scatter(x='reviewCount', y='rank', 
+    title='Figure 1. Correlation Review Count & Rank in Vegetarian Restaurants in Salamanca', figsize=(5,5), color='pink',
+    xlabel='Review Count', ylabel='Rank');
+Filtered_Cuisine.plot.scatter(x='reviewCount', y='rank', 
+    title='Figure 2. Correlation Review Count & Rank in Vegetarian Restaurants in Salamanca', figsize=(5,5), color='pink',
+    xlabel='Review Count', ylabel='Rank');
+
+#crosstab healthy & vegetarian
+salamanca = mydata[mydata['neigh'] == 'Salamanca (District)']
+pd.crosstab(salamanca['healthy'], salamanca['vegetarian'])
+crosstab = pd.crosstab(salamanca['healthy'], salamanca['vegetarian'])
+print(crosstab)
+filtered_salamanca = salamanca[(salamanca['healthy'] > 0) & (salamanca['vegetarian'] > 0)]
+print(filtered_salamanca)
+list(filtered_salamanca.columns)
+
+#Definition of price range 
+price_range_values = filtered_salamanca['priceRange'].unique()
+print("Unique values in the 'Price Range' column:")
+print(price_range_values)
+
+preferred = filtered_salamanca[filtered_salamanca['priceRange'] == '$$ - $$$']
+print(preferred)
+
+#Display of cuisines of preferred
+cusines_selection = preferred['cuisines'].unique()
+print(cusines_selection)
+
+#Vectorize preferred cuisines (Mediterranean)
+preferred['cuisines'] = preferred['cuisines'].fillna('None')
+def Mediterranean(str):
+  return int('Mediterranean' in str)
+Mediterranean = np.vectorize(Mediterranean)
+
+preferred['Mediterranean'] = Mediterranean(preferred['cuisines'])
+
+#Filter Restaurant selection further based on Mediterranean food
+favs = preferred[(preferred['Mediterranean'] > 0)]
+
+#Preparation for Crosstab with healthy x vegetarian x Mediterranean
+crosstab_favs = pd.crosstab(index=[filtered_salamanca['Mediterranean'], filtered_salamanca['healthy'], filtered_salamanca['vegetarian']], columns='count')
+print(crosstab_favs)
+
+#Crosstab for unfiltered Salamanca (same approach)
+salamanca['cuisines'] = salamanca['cuisines'].fillna('None')
+def Mediterranean(str):
+  return int('Mediterranean' in str)
+Mediterranean = np.vectorize(Mediterranean)
+
+salamanca['Mediterranean'] = Mediterranean(salamanca['cuisines'])
+
+crosstab_sal = pd.crosstab(index=[salamanca['Mediterranean'], salamanca['healthy'], salamanca['vegetarian']], columns='count')
+print(crosstab_sal)
+
